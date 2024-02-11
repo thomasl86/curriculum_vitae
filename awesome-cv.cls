@@ -214,6 +214,11 @@
 \newcommand*{\subentrylocationstyle}[1]{{\fontsize{7pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
 \newcommand*{\subdescriptionstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\upshape\color{text} #1}}
 
+% For elements of highlights
+\newcommand*{\hltitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\hldurationstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\scshape\color{awesome} #1}}
+\newcommand*{\hldescriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
+
 % For elements of pub
 \newcommand*{\pubtitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
 \newcommand*{\pubdescriptionstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\upshape\color{text} #1}}
@@ -247,6 +252,8 @@
 \setlength{\descrcolwidth}{4.0cm}
 \newlength{\colwidth}
 \setlength{\colwidth}{4.0cm}
+\newlength{\hlcolwidth}
+\setlength{\hlcolwidth}{2.5cm}
 
 
 %-------------------------------------------------------------------------------
@@ -599,6 +606,29 @@
     %\multicolumn{2}{L{\textwidth - 1cm}}{\descriptionstyle{#5}}
   \end{tabular*}%
 }
+
+\newenvironment{cvhighlights}{%
+  \vspace{\acvSectionContentTopSkip}
+  \begin{center}
+}{%
+  \end{center}
+}
+% Define a highlight entry
+\newcommand*{\hlentry}[3]{%
+  \vspace{-2.0mm}
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - \hlcolwidth} R{\hlcolwidth}}
+    \ifempty{#2}
+      {\hltitlestyle{#1} & \\}
+      {\hltitlestyle{#1} & \hldurationstyle{#2} \\}
+    \hldescriptionstyle{#3} & 
+  \end{tabular*}%
+  % \hltitlestyle{#1}\\
+  % \hldurationstyle{#2}\\
+  % \hldescriptionstyle{#3}
+}
+
 % Define an entry of presentation information
 % Usage: \cvpres{<title>}{<location>}{<date>}{<description>}
 \newcommand*{\cvpres}[4]{%
@@ -723,6 +753,23 @@
   \end{justify}
   \vspace{-4.0mm}
 }
+
+
+\newcommand{\cvdoublecolumn}[2]{%
+    \begin{minipage}[t]{{.45\linewidth}}#1\end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{{.45\linewidth}}#2\end{minipage}%
+}
+
+\newcommand{\cvreference}[8]{%
+    \textbf{#1}\newline% Name
+    \ifthenelse{\equal{#2}{}}{}{\emph{#2}\newline}%
+    \ifthenelse{\equal{#3}{}}{}{#3\newline}%
+    \ifthenelse{\equal{#4}{}}{}{#4\newline}%
+    \ifthenelse{\equal{#5}{}}{}{#5\newline}%
+    \ifthenelse{\equal{#6}{}}{}{#6\newline}%
+    \ifthenelse{\equal{#7}{}}{}{\href{mailto:#7}\faEnvelope\acvHeaderIconSep~\texttt{#7}\newline}%
+    \ifthenelse{\equal{#8}{}}{}{\faMobile\acvHeaderIconSep~#8}}
 
 
 %-------------------------------------------------------------------------------
